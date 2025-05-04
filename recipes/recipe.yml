@@ -14,28 +14,14 @@ image-version: latest # latest is also supported if you want new updates ASAP
 modules:
   - type: files
     files:
-      - source: ./dotfiles
-        destination: /etc/skel 
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
   - type: script
     scripts:
-      - name: install-1password
-        run: |
-          echo "Adding 1Password Flatpak remote..."
-          flatpak remote-add --if-not-exists 1password https://downloads.1password.com/linux/flatpak/1Password.flatpakrepo
-          echo "Installing 1Password..."
-          flatpak install -y --noninteractive --from https://downloads.1password.com/linux/flatpak/1Password.flatpakref
-      - name: set-shell-zsh
-        run: |
-          echo "Setting shell to zsh"
-          sed -i 's|^SHELL=.*|SHELL=/usr/bin/zsh|' /etc/default/useradod
-      - name: clone-dotfiles
-        run: |
-          echo "Cloning dotfiles..."
-          git clone --depth=1 https://github.com/lucastcottle/dotfiles /etc/skel
-          rm -rf /etc/skel/.git
+      - clone-dotfiles.sh
+      - install-1password.sh
+      - set-default-shell.sh
 
           
   - type: rpm-ostree
