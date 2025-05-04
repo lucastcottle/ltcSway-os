@@ -6,6 +6,5 @@
 set -oue pipefail
 
 # Your code goes here.
-echo "Cloning dotfiles..."
-git clone --depth=1 https://github.com/lucastcottle/dotfiles /etc/skel
-rm -rf /etc/skel/.git
+mkdir -p /etc/skel/repos
+git clone --depth=1 https://github.com/lucastcottle/dotfiles /etc/skel/repos/dotfiles
