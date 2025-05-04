@@ -6,38 +6,56 @@ name: ltcSway-os
 description: This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 41 # latest is also supported if you want new updates ASAP
+base-image: ghcr.io/wayblueorg/sway
+image-version: latest # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
   - type: files
     files:
+      - source: ./dotfiles
+        destination: /etc/skel 
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
+  - type: script
+    scripts:
+      - name: install-1password
+        run: |
+          echo "Adding 1Password Flatpak remote..."
+          flatpak remote-add --if-not-exists 1password https://downloads.1password.com/linux/flatpak/1Password.flatpakrepo
+          echo "Installing 1Password..."
+          flatpak install -y --noninteractive --from https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+      - name: set-shell-zsh
+        run: |
+          echo "Setting shell to zsh"
+          sed -i 's|^SHELL=.*|SHELL=/usr/bin/zsh|' /etc/default/useradod
+      - name: clone-dotfiles
+        run: |
+          echo "Cloning dotfiles..."
+          git clone --depth=1 https://github.com/lucastcottle/dotfiles /etc/skel
+          rm -rf /etc/skel/.git
+
+          
   - type: rpm-ostree
-    repos:
-      - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
     install:
-      - micro
-      - starship
-    remove:
-      # example: removing firefox (in favor of the flatpak)
-      # "firefox" is the main package, "firefox-langpacks" is a dependency
-      - firefox
-      - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+      - zsh
+      - stow
+      - nvim
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
     system:
       # If no repo information is specified, Flathub will be used by default
       install:
+        - com.stremio.Stremio
         - org.mozilla.firefox
-        - org.gnome.Loupe
-      remove:
-        - org.gnome.eog
+        - com.valvesoftware.Steam
+        - com.discordapp.Discord
+        - com.transmissionbt.Transmission
+        - org.gnome.Boxes
+        - com.spotify.Client
     user: {} # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
