@@ -5,7 +5,7 @@
 This image includes my preferred tools, dotfiles, and configurations baked in, with automatic updates and reproducible builds via GitHub Actions.
 
 
-## 🖥️ Features
+## Features
 
 - **Based on Wayblue (Sway + Fedora Atomic)**
   - Clean, tiling Wayland desktop using Sway
@@ -21,7 +21,7 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
   - Non-Flathub Flatpak: [1Password](https://1password.com/linux/)
 
 
-## 📦 How It Works
+## How It Works
 
 - **Image source**: [`recipe.yml`](./recipe.yml)
 - **Base image**: [`ghcr.io/wayblueorg/sway`](https://github.com/lucastcottle/wayblue-fork)
@@ -30,7 +30,7 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
 
 
 
-## 🛠️ First Boot Behavior
+## First Boot Behavior
 
 - Clones my dotfiles into `~/repos/dotfiles`
 - Sets default shell to `zsh` for new users
@@ -38,7 +38,7 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
 - Applies any custom system configs under `system/`
 
 
-## 🧰 Manual Setup (Optional)
+## Manual Setup (Optional)
 
 If you need to re-stow or manually apply dotfiles:
 ```bash
@@ -46,14 +46,14 @@ cd ~/repos/dotfiles
 stow . 
 ```
 
-### 🚀 Building It Yourself
+## Building It Yourself
 
 This image is built via the blue-build GitHub Action. You can fork this repo and customize your own image by editing recipe.yml.
 
-### 🔐 Security
+## Security
 
 This image is signed using Sigstore and includes policies for secure OSTree updates.
 
-### 🧾 License
+## License
 
 This repo follows the licensing of the included upstream projects. My dotfiles are MIT licensed unless otherwise noted. 
