@@ -1,43 +1,62 @@
-# ltcSway-os &nbsp; [![bluebuild build badge](https://github.com/lucastcottle/ltcsway-os/actions/workflows/build.yml/badge.svg)](https://github.com/lucastcottle/ltcsway-os/actions/workflows/build.yml)
+# ltcSway-os
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+**ltcSway-os** is my personal, custom Fedora Atomic OS image, built using [uBlue](https://github.com/ublue-os) tools and based on [wayblue](https://github.com/lucastcottle/wayblue-fork) — a minimal, Sway-based desktop environment on Fedora Atomic.
 
-After setup, it is recommended you update this README to describe your custom image.
+This image includes my preferred tools, dotfiles, and configurations baked in, with automatic updates and reproducible builds via GitHub Actions.
 
-## Installation
+---
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
+## 🖥️ Features
 
-To rebase an existing atomic Fedora installation to the latest build:
+- **Based on Wayblue (Sway + Fedora Atomic)**
+  - Clean, tiling Wayland desktop using Sway
+- **Automatic daily updates**
+  - Powered by `ublue-update` and GitHub Actions
+- **My personal dotfiles**
+  - Cloned into `~/repos/dotfiles` on first login
+- **Zsh as default shell**
+  - Pre-installed with `stow` for dotfile management
+- **Preinstalled applications**
+  - Common Flatpaks: Firefox, Discord, Steam, Spotify, Stremio, GNOME Boxes, Transmission
+  - Native tools: `zsh`, `nvim`, `stow`
+  - Non-Flathub Flatpak: [1Password](https://1password.com/linux/)
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/lucastcottle/ltcsway-os:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/lucastcottle/ltcsway-os:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+---
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
+## 📦 How It Works
 
-## ISO
+- **Image source**: [`recipe.yml`](./recipe.yml)
+- **Base image**: [`ghcr.io/wayblueorg/sway`](https://github.com/lucastcottle/wayblue-fork)
+- **Builds**: GitHub Actions builds and signs new image versions daily (6:00 UTC)
+- **Auto-updates**: Systems running this image will check for new versions and auto-rebase using `ublue-update`
 
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/learn/universal-blue/#fresh-install-from-an-iso). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
+---
 
-## Verification
+## 🛠️ First Boot Behavior
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
+- Clones my dotfiles into `~/repos/dotfiles`
+- Sets default shell to `zsh` for new users
+- Installs Flatpaks, including custom repo (1Password)
+- Applies any custom system configs under `system/`
 
+---
+
+## 🧰 Manual Setup (Optional)
+
+If you need to re-stow or manually apply dotfiles:
 ```bash
-cosign verify --key cosign.pub ghcr.io/lucastcottle/ltcsway-os
+cd ~/repos/dotfiles
+stow . 
 ```
+
+### 🚀 Building It Yourself
+
+This image is built via the blue-build GitHub Action. You can fork this repo and customize your own image by editing recipe.yml.
+
+### 🔐 Security
+
+This image is signed using Sigstore and includes policies for secure OSTree updates.
+
+### 🧾 License
+
+This repo follows the licensing of the included upstream projects. My dotfiles are MIT licensed unless otherwise noted. 
