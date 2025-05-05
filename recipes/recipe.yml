@@ -20,15 +20,12 @@ modules:
   - type: script
     scripts:
       - clone-dotfiles.sh
-      - install-1password.sh
-      - set-default-shell.sh
-
           
   - type: rpm-ostree
     install:
       - zsh
       - stow
-      - nvim
+      - neovim
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
