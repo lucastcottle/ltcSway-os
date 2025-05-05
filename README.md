@@ -4,7 +4,6 @@
 
 This image includes my preferred tools, dotfiles, and configurations baked in, with automatic updates and reproducible builds via GitHub Actions.
 
----
 
 ## 🖥️ Features
 
@@ -21,7 +20,6 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
   - Native tools: `zsh`, `nvim`, `stow`
   - Non-Flathub Flatpak: [1Password](https://1password.com/linux/)
 
----
 
 ## 📦 How It Works
 
@@ -30,7 +28,7 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
 - **Builds**: GitHub Actions builds and signs new image versions daily (6:00 UTC)
 - **Auto-updates**: Systems running this image will check for new versions and auto-rebase using `ublue-update`
 
----
+
 
 ## 🛠️ First Boot Behavior
 
@@ -39,7 +37,6 @@ This image includes my preferred tools, dotfiles, and configurations baked in, w
 - Installs Flatpaks, including custom repo (1Password)
 - Applies any custom system configs under `system/`
 
----
 
 ## 🧰 Manual Setup (Optional)
 
