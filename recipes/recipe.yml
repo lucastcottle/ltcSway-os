@@ -26,6 +26,9 @@ modules:
       - zsh
       - stow
       - neovim
+    remove:
+      - firefox
+      - firefox-langpacks 
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
@@ -39,6 +42,7 @@ modules:
         - com.transmissionbt.Transmission
         - org.gnome.Boxes
         - com.spotify.Client
+        - org.freedesktop.Platform.ffmpeg-full
     user: {} # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
