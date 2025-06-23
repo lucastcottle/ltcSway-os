@@ -26,6 +26,9 @@ modules:
       - zsh
       - stow
       - neovim
+      - gammastep
+      - grim
+
     remove:
       - firefox
       - firefox-langpacks 
