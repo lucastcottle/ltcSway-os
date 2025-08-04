@@ -20,7 +20,7 @@ modules:
   - type: script
     scripts:
       - clone-dotfiles.sh
-          
+
   - type: rpm-ostree
     install:
       - zsh
@@ -31,22 +31,19 @@ modules:
 
     remove:
       - firefox
-      - firefox-langpacks 
+      - firefox-langpacks
 
   - type: default-flatpaks
-    notify: true # Send notification after install/uninstall is finished (true/false)
-    system:
-      # If no repo information is specified, Flathub will be used by default
-      install:
-        - com.stremio.Stremio
-        - org.mozilla.firefox
-        - com.valvesoftware.Steam
-        - com.discordapp.Discord
-        - com.transmissionbt.Transmission
-        - org.gnome.Boxes
-        - com.spotify.Client
-        - org.freedesktop.Platform.ffmpeg-full
-    user: {} # Also add Flathub user repo, but no user packages
+    configurations:
+      - install:
+          - com.stremio.Stremio
+          - org.mozilla.firefox
+          - com.valvesoftware.Steam
+          - com.discordapp.Discord
+          - com.transmissionbt.Transmission
+          - org.gnome.Boxes
+          - com.spotify.Client
+          - org.freedesktop.Platform.ffmpeg-full
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
 
