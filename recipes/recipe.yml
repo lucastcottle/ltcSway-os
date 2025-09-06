@@ -27,7 +27,7 @@ modules:
       - stow
       - neovim
       - gammastep
-      - grim
+      - boxes
 
     remove:
       - firefox
@@ -41,7 +41,6 @@ modules:
           - com.valvesoftware.Steam
           - com.discordapp.Discord
           - com.transmissionbt.Transmission
-          - org.gnome.Boxes
           - com.spotify.Client
           - org.freedesktop.Platform.ffmpeg-full
 
