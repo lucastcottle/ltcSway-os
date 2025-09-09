@@ -27,7 +27,7 @@ modules:
       - stow
       - neovim
       - gammastep
-      - boxes
+      - gnome-boxes
 
     remove:
       - firefox
