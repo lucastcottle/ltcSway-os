@@ -42,7 +42,7 @@ modules:
           - com.discordapp.Discord
           - com.transmissionbt.Transmission
           - com.spotify.Client
-          - org.freedesktop.Platform.ffmpeg-full
+          - org.freedesktop.Platform.codecs-extra
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
 
