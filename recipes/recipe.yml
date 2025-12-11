@@ -27,7 +27,16 @@ modules:
       - stow
       - neovim
       - gammastep
-      - gnome-boxes
+      - virt-manager
+      - virt-install
+      - libvirt
+      - libvirt-daemon
+      - libvirt-daemon-config-network
+      - libvirt-daemon-kvm
+      - qemu-kvm
+      - bridge-utils
+      - dnsmasq
+
 
     remove:
       - firefox
