@@ -2,12 +2,6 @@
 
 set -oue pipefail
 
-# Ensure zsh is available
-if [ ! -x /usr/bin/zsh ]; then
-    echo "ERROR: /usr/bin/zsh not found!" >&2
-    exit 1
-fi
-
 # Set zsh as the default shell for new users
 # Create /etc/default/useradd if it doesn't exist, then set SHELL
 if [ -f /etc/default/useradd ]; then
