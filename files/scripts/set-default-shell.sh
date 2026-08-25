@@ -2,8 +2,24 @@
 
 set -oue pipefail
 
+# Ensure zsh is available
+if [ ! -x /usr/bin/zsh ]; then
+    echo "ERROR: /usr/bin/zsh not found!" >&2
+    exit 1
+fi
+
 # Set zsh as the default shell for new users
-sed -i 's|^SHELL=.*|SHELL=/usr/bin/zsh|' /etc/default/useradd
+# Create /etc/default/useradd if it doesn't exist, then set SHELL
+if [ -f /etc/default/useradd ]; then
+    if grep -q '^SHELL=' /etc/default/useradd; then
+        sed -i 's|^SHELL=.*|SHELL=/usr/bin/zsh|' /etc/default/useradd
+    else
+        echo 'SHELL=/usr/bin/zsh' >> /etc/default/useradd
+    fi
+else
+    mkdir -p /etc/default
+    echo 'SHELL=/usr/bin/zsh' > /etc/default/useradd
+fi
 
 # Install a one-shot systemd service to set zsh for existing users on first boot
 cat > /etc/systemd/system/set-zsh-default.service << 'UNIT'
@@ -14,7 +30,7 @@ ConditionPathExists=!/etc/.zsh-default-set
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c 'for user in $(getent passwd | awk -F: "$3 >= 1000 && $3 < 65534 {print $1}"); do chsh -s /usr/bin/zsh "$user" 2>/dev/null; done && touch /etc/.zsh-default-set'
+ExecStart=/bin/bash -c 'for user in $(getent passwd | awk -F: "\$3 >= 1000 && \$3 < 65534 {print \$1}"); do chsh -s /usr/bin/zsh "$user" 2>/dev/null; done && touch /etc/.zsh-default-set'
 RemainAfterExit=yes
 
 [Install]
@@ -22,3 +38,6 @@ WantedBy=multi-user.target
 UNIT
 
 chmod 644 /etc/systemd/system/set-zsh-default.service
+
+# Enable the service
+systemctl enable set-zsh-default.service
